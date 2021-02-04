@@ -1,0 +1,17 @@
+
+
+<li>
+    {{Num1}}
+</li>
+<button (click)="show();Num1=check.recovered">
+    click_me
+</button>
+
+<h2>My stats</h2>
+<ul class="list">
+    <li *ngFor="let Stat of list">
+        <a routerLink="/Country/{{Stat.country}}">
+            <span class="badge">{{Stat.country}}</span> {{Stat.deaths}}
+          </a>
+    </li>
+</ul>

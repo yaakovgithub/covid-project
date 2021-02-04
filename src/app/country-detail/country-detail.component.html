@@ -1,0 +1,13 @@
+<h2>details</h2>
+<div *ngIf="Stat">
+
+    <h2>{{Stat?.country | uppercase}} Details</h2>
+    <div><span >country: </span>{{Stat.country}}</div>
+    <div>
+      <label>deaths:
+        {{Stat.deaths}} 
+      </label>
+      
+    </div>
+  
+  </div>

@@ -1,0 +1,10 @@
+{
+    "/ap1i": {
+      "target": "https://covid-19-data.p.rapidapi.com/totals",
+      "secure": true,
+      "changeOrigin": true,
+      "pathRewrite": {
+        "^/ap1i": ""
+      }
+    }
+  }
