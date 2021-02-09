@@ -1,7 +1,10 @@
 <h2>details</h2>
+<button (click)="click1()">
+  click_me
+</button>
 <div *ngIf="Stat">
 
-    <h2>{{Stat?.country | uppercase}} Details</h2>
+    <h2>{{Stat?.country  | uppercase}} Details</h2>
     <div><span >country: </span>{{Stat.country}}</div>
     <div>
       <label>deaths:
@@ -9,5 +12,7 @@
       </label>
       
     </div>
-  
+    
+
   </div>
+  <button (click)="goBack()">go back</button>

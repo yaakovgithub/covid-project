@@ -12,10 +12,12 @@ import {observable, Observable,of} from 'rxjs'
   styleUrls: ['./country-detail.component.css']
 })
 export class CountryDetailComponent implements OnInit {
-   Stat:Stat;
+   Stat:Stat;//added array type
   constructor( private route: ActivatedRoute,
     private statservice: StatService,
-    private location: Location) { }
+    private location: Location) {
+     // this.Stat=[] ;
+    }
 
   ngOnInit(): void {
 
@@ -26,8 +28,14 @@ export class CountryDetailComponent implements OnInit {
      const name= this.route.snapshot.paramMap.get('country');
      console.log(name);
     // this.show();
-    this.statservice.getStat(name).subscribe(stat=>this.Stat=stat);
-    console.log(this.Stat.deaths);
+    this.statservice.getStat(name).subscribe((stat)=>{
+      this.Stat=stat[0];///ask question here why need array type
+    });
+    //this.statservice.getStat(name).subscribe(stat=>this.Stat=stat);
+    setTimeout(() => {
+      console.log(this.Stat.deaths);
+    }, 1000);
+    
   }
   show():void{
     fetch("https://covid-19-data.p.rapidapi.com/country?name=israel", {
@@ -41,5 +49,11 @@ export class CountryDetailComponent implements OnInit {
     .then(response => response.json()).then(data=>  this.Stat=data[0]);
     console.log(this.Stat);
     //return this.check;
+  }
+  click1():void{
+    return;
+  }
+  goBack(): void {
+    this.location.back();
   }
 }

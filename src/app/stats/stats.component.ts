@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./stats.component.css']
 })
 export class StatsComponent implements OnInit {
+  private loading:boolean;//added
   list: Stat[] ;
   check:any;
   check2!: Stat;
@@ -25,7 +26,7 @@ export class StatsComponent implements OnInit {
      
   ngOnInit(): void {
     //this.show();
-    
+    this.loading=false;
     this.getList();
   }
   selectedCountry!: Stat;
@@ -33,6 +34,8 @@ onSelect(chosen: Stat): void {
   this.selectedCountry = chosen;
 }
 show():void{
+  this.statservice.findtemp("USA");
+  return;
   fetch("https://covid-19-data.p.rapidapi.com/country?name=israel", {
     "method": "GET",
     "headers": {
@@ -47,6 +50,23 @@ show():void{
 
 getList():void
 {
+  console.log(this.loading);
+  this.loading=true;
+  console.log(this.loading);
+  console.log('show info');
+  this.statservice.getList().subscribe((list)=>{
+     this.list=list;
+     this.loading=false;
+     console.log(this.loading);
+    });
+    console.log(this.loading);
+  console.log(this.list);
+  console.log(this.loading);
+  console.log('dsa');
+  return;
+
+
+
   console.log('show info');
   this.statservice.getList().subscribe(list=> this.list=list);
   console.log(this.list);
