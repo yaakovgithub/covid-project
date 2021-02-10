@@ -1,12 +1,12 @@
 
-
-<li >  
-    {{Num1}}
-</li>
-<button (click)="show();Num1=check.recovered" >
+<button (click)="getList()" >
+    inital
+</button>
+<input #countryinput>
+<button (click)="add(countryinput.value)" >
     click_me
 </button>
-
+<button routerLink="World">wrld</button>
 <h2>My stats</h2>
 <div class="text-center">
     <p class="lead" *ngIf="loading">Loading....</p>
@@ -16,5 +16,7 @@
         <a routerLink="/Country/{{Stat.country}}">
             <span class="badge">{{Stat.country}}</span> {{Stat.deaths}}
           </a>
+          <button class="delete" title="delete country"
+            (click)="delete(Stat.country)">x</button>
     </li>
 </ul>

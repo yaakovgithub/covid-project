@@ -21,7 +21,7 @@ export class CountryDetailComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.getStat()
+    this.getStat1()
   }
   getStat():void
   {
@@ -50,10 +50,29 @@ export class CountryDetailComponent implements OnInit {
     console.log(this.Stat);
     //return this.check;
   }
-  click1():void{
-    return;
-  }
+  
   goBack(): void {
     this.location.back();
+  }
+  getStat1():void
+  {
+    const world=this.route.snapshot.paramMap.get('World')
+     const name= this.route.snapshot.paramMap.get('country');
+     console.log(name);
+    // this.show();
+    if(name==null )
+    {
+      console.log("world");
+      this.statservice.getStat1(world).subscribe(stat=>this.Stat=stat[0]);
+      return;
+    }
+    this.statservice.getStat(name).subscribe((stat)=>{
+      this.Stat=stat[0];///ask question here why need array type
+    });
+    //this.statservice.getStat(name).subscribe(stat=>this.Stat=stat);
+    setTimeout(() => {
+      console.log(this.Stat.deaths);
+    }, 1000);
+    
   }
 }

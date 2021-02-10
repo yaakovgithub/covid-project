@@ -5,7 +5,8 @@ import {CountryDetailComponent} from './country-detail/country-detail.component'
 
 const routes: Routes = [
   { path: '', component: StatsComponent },
-  {path: 'Country/:country',component: CountryDetailComponent}
+  {path: 'Country/:country',component: CountryDetailComponent},
+  {path: 'World',component: CountryDetailComponent}
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

@@ -1,14 +1,60 @@
 <h2>details</h2>
-<button (click)="click1()">
-  click_me
-</button>
+
 <div *ngIf="Stat">
 
     <h2>{{Stat?.country  | uppercase}} Details</h2>
     <div><span >country: </span>{{Stat.country}}</div>
     <div>
+      <label>code:
+        {{Stat.code}} 
+      </label>
+</div>
+
+<div>
+      <label>confirmed:
+        {{Stat.confirmed}} 
+      </label>
+</div>
+
+<div>
+      <label>recovered:
+        {{Stat.recovered}} 
+      </label>
+</div>
+
+<div>
+      <label>critical:
+        {{Stat.critical}} 
+      </label>
+</div>
+
+<div>
       <label>deaths:
         {{Stat.deaths}} 
+      </label>
+</div>
+
+<div>
+      <label>latitude:
+        {{Stat.latitude}} 
+      </label>
+</div>
+
+<div>
+      <label>longitude:
+        {{Stat.longitude}} 
+      </label>
+</div>
+
+<div>
+      <label>lastChange:
+        {{Stat.lastChange}} 
+      </label>
+</div>
+
+<div>
+      <label>lastUpdate:
+        {{Stat.lastUpdate}} 
       </label>
       
     </div>

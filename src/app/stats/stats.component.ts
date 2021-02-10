@@ -19,22 +19,24 @@ export class StatsComponent implements OnInit {
   list: Stat[] ;
   check:any;
   check2!: Stat;
+   bool:number;
   constructor(private statservice:StatService) { 
- 
-  
+    this.loading=false;
+  this.bool=3;
+  //this.getList();
     }
      
   ngOnInit(): void {
     //this.show();
-    this.loading=false;
-    this.getList();
+    this.statservice.initil().subscribe(list=>this.list=list);
+   // this.getList();
   }
   selectedCountry!: Stat;
 onSelect(chosen: Stat): void {
   this.selectedCountry = chosen;
 }
 show():void{
-  this.statservice.findtemp("USA");
+  
   return;
   fetch("https://covid-19-data.p.rapidapi.com/country?name=israel", {
     "method": "GET",
@@ -72,6 +74,59 @@ getList():void
   console.log(this.list);
   console.log('dsa');
 }
+add(name: string): void {
+  name = name.trim();
+  
+  if (!name) {console.log("exists"); return; }
+  
+  console.log(this.bool);
+//  this.statservice.findtemp(name).subscribe(()=>this.statservice.addcountry(name).subscribe((added)=>this.list=added));
+//this.statservice.findtemp1(name).subscribe((added)=>this.list.push(added));                                                      // use this one showing puish no subscribe findtemp1
+const len=this.list.length;
+console.log(this.list.length);
+for (let index = 0; index < this.list.length; index++) {
+  if(this.list[index].country==name)
+  {
+    console.log("already exists");
+    return ;
+  }
+  
+}
+this.statservice.findtemp(name).subscribe((added)=>this.list=added);
+console.log(this.list.length);
+setTimeout(() => {
+  if(this.list.length===len)
+{
+  console.log("incorrect input");
+}
+}, 1500);
 
+  return;
+  setTimeout(() => {
+    
+    this.bool=g;
+  }, 1500);
+  
+  setTimeout(() => {
+    console.log(this.bool);
 
+  }, 1500);
+  console.log(this.bool);
+  setTimeout(() => {
+    if(this.bool===1)
+  {
+    console.log("working");
+    this.statservice.addcountry(name).subscribe((added)=>this.list=added);
+    //this.statservice.addcountry(name).s
+  }
+  console.log("exists");
+  }, 9000);
+  
+}
+delete(name:string):void{
+  
+  console.log(name);
+  this.list=this.list.filter(country=>country.country!==name);
+  this.statservice.delete(name).subscribe(delete1=>this.list=delete1);
+}
 }

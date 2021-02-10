@@ -5,6 +5,7 @@ import {forkJoin, observable, Observable,of} from 'rxjs'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Console } from 'console';
 import { visitValue } from '@angular/compiler/src/util';
+import { ThrowStmt } from '@angular/compiler';
 @Injectable({
   providedIn: 'root'
 })
@@ -14,6 +15,7 @@ export class StatService {
   private loading:boolean;
   private country:Stat;
   check:any;
+  temp:Object[];
   private dsa:any;
   private ur1='https://covid-19-data.p.rapidapi.com/country?name=';
   private ur='https://covid-19-data.p.rapidapi.com/country?name=israel';
@@ -28,23 +30,36 @@ export class StatService {
     //constructor was empty and working code
     this.arr=[];
     this.loading=false;
+    this.temp=[];
    // this.show();
+   }
+   initil():Observable<Stat[]>
+   {
+     console.log("loaded");
+    return of(this.arr);
    }
   getList():Observable<Stat[]>
   {
-    setTimeout(() => {
-      return this.http.get<Stat[]>(this.ur,this.headr);//.subscribe(data=>this.arr[0]=data[0]);///put let variable =this.http instead of return and still works somehow how the hell is this working
+    this.arr=[];
+    this.http.get<Stat[]>(this.ur,this.headr).toPromise().then(data=>this.arr.push(data[0]));
+
+      //this.http.get<Stat[]>(this.ur,this.headr).subscribe(data=>this.arr.push(data[0]));
+     // return this.http.get<Stat[]>(this.ur,this.headr);//.subscribe(data=>this.arr[0]=data[0]);///put let variable =this.http instead of return and still works somehow how the hell is this working
       //also check why didnet need the subscribe
-    }, 1000);
+   
     
     
    
     setTimeout(() => {
       console.log('sleep');
-      return this.http.get<Stat[]>(this.ur1+'USA',this.headr);//.subscribe(data=>this.arr[1]=data[0]);
+      this.http.get<Stat[]>(this.ur1+'USA',this.headr).toPromise().then(data=>this.arr.push(data[0]));
+      //this.http.get<Stat[]>(this.ur1+'USA',this.headr).subscribe(data=>this.arr.push(data[0]));
+      //return this.http.get<Stat[]>(this.ur1+'USA',this.headr);//.subscribe(data=>this.arr[1]=data[0]);
       // And any other code that should run only after 5s
-    }, 3500);
-   
+    }, 2500);
+    //this.arr=[]; why doesnt it maatter if this is here or first line of func ????????
+    console.log("emptyout");
+   return of(this.arr);
     //var ass=[this.arr[0],this.arr[1]];
     
      // return of(this.arr);
@@ -170,7 +185,7 @@ export class StatService {
   {
      return this.http.get<Stat[]>(this.ur1+name,this.headr);
   }
-  async findtemp(name:string):Promise<number>{
+  async findtempold(name:string):Promise<number>{
     let list=await this.http.get<Object[]>("https://covid-19-data.p.rapidapi.com/help/countries",this.headr);
    // list.forEach(data=>console.log(data.find(i=>i.name==='Israel')));
     list.forEach(data=>data.find(i=>i.name==name)).then(()=>console.log("yes")).catch(()=>console.log("no"));
@@ -178,4 +193,90 @@ export class StatService {
  // list.forEach(data=>console.log(data.some(data=>data.(i=>i.name==='Israel'))));
    return 1;
   }
+  findtemp(name:string):Observable<Stat[]>{
+    
+   
+    this.http.get<Object[]>("https://covid-19-data.p.rapidapi.com/help/countries",this.headr).toPromise().
+    then(res=>
+      {
+        
+        for (let index = 0; index < res.length; index++) {
+          if(res[index].name==name)
+          {
+            
+            console.log("change3d");
+            this.addcountry(name);//added
+           // return of(this.arr);
+           return this.arr;
+            setTimeout(() => {
+              return of(1);
+            }, 1500);
+            return of(1);
+          }
+         
+        }
+      return this.arr//added
+      }
+    );
+//return false;
+return of(this.arr);
+setTimeout(() => {
+  return of(0);
+}, 3000);
+  return of(0);
+  }
+  addcountry(name:string): Observable<Stat[]>
+  {
+    setTimeout(() => {
+      this.http.get<Stat[]>(this.ur1+name,this.headr).subscribe(data=>this.arr.push(data[0]));
+    
+    }, 1500);
+   return of(this.arr);
+  }
+  delete(name:string):Observable<Stat[]>
+  {
+    this.arr= this.arr.filter(country=>country.country!=name);
+    return of(this.arr);
+  }
+  findtemp1(name:string):Observable<Stat>{
+    
+   
+    this.http.get<Object[]>("https://covid-19-data.p.rapidapi.com/help/countries",this.headr).toPromise().
+    then(res=>
+      {
+        
+        for (let index = 0; index < res.length; index++) {
+          if(res[index].name==name)
+          {
+            console.log("change3d");
+            
+            this.addcountry1(name);//added
+            return this.arr[this.arr.length];
+            return of(this.arr);
+            setTimeout(() => {
+              return of(1);
+            }, 1500);
+            return of(1);
+          }
+         
+        }
+      
+      }
+    );
+
+  }
+  addcountry1(name:string): void
+  {
+    setTimeout(() => {
+      this.http.get<Stat[]>(this.ur1+name,this.headr).subscribe(data=>this.arr.push(data[0]));
+    
+    }, 1500);
+   //return of(this.arr);
+  }
+  getStat1(name:string):Observable<Stat[]>
+  {
+   // const trythis1=this.ur1+name;
+    return this.http.get<Stat[]>("https://covid-19-data.p.rapidapi.com/totals",this.headr);//why the hell does this have to be array type
+  }
+
 }
