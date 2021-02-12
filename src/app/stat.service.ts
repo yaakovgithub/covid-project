@@ -42,7 +42,7 @@ export class StatService {
   {
     this.arr=[];
     this.http.get<Stat[]>(this.ur,this.headr).toPromise().then(data=>this.arr.push(data[0]));
-
+   // this.http.get<Stat>(this.ur,this.headr).toPromise().then(data=>this.arr.push(data));// THIS IS A EXAPLE OF WHY U NEED IT TO BEE ARRAY TYPE NOT JUST STAT TYPE WHY THOUGH?
       //this.http.get<Stat[]>(this.ur,this.headr).subscribe(data=>this.arr.push(data[0]));
      // return this.http.get<Stat[]>(this.ur,this.headr);//.subscribe(data=>this.arr[0]=data[0]);///put let variable =this.http instead of return and still works somehow how the hell is this working
       //also check why didnet need the subscribe
@@ -54,7 +54,7 @@ export class StatService {
       console.log('sleep');
       this.http.get<Stat[]>(this.ur1+'USA',this.headr).toPromise().then(data=>this.arr.push(data[0]));
       //this.http.get<Stat[]>(this.ur1+'USA',this.headr).subscribe(data=>this.arr.push(data[0]));
-      //return this.http.get<Stat[]>(this.ur1+'USA',this.headr);//.subscribe(data=>this.arr[1]=data[0]);
+      //return this.http.get<Stat[]>(this.ur1+'USA',this.headr);//.subscribe(data=>this.arr[1]=data[0]); //why does the code continue even if i use this line of code
       // And any other code that should run only after 5s
     }, 2500);
     //this.arr=[]; why doesnt it maatter if this is here or first line of func ????????
@@ -267,6 +267,11 @@ setTimeout(() => {
   }
   addcountry1(name:string): void
   {
+    setTimeout(() => {
+      this.http.get<Stat[]>(this.ur1+name,this.headr).toPromise().then(data=>this.arr.push(data[0]));
+    }, 1500);
+    
+    return;
     setTimeout(() => {
       this.http.get<Stat[]>(this.ur1+name,this.headr).subscribe(data=>this.arr.push(data[0]));
     

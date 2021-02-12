@@ -81,7 +81,9 @@ add(name: string): void {
   
   console.log(this.bool);
 //  this.statservice.findtemp(name).subscribe(()=>this.statservice.addcountry(name).subscribe((added)=>this.list=added));
+//this.statservice.findtemp1(name).toPromise().then((added)=>this.list.push(added));        
 //this.statservice.findtemp1(name).subscribe((added)=>this.list.push(added));                                                      // use this one showing puish no subscribe findtemp1
+//return;
 const len=this.list.length;
 console.log(this.list.length);
 for (let index = 0; index < this.list.length; index++) {
@@ -92,14 +94,14 @@ for (let index = 0; index < this.list.length; index++) {
   }
   
 }
-this.statservice.findtemp(name).subscribe((added)=>this.list=added);
+this.statservice.findtemp(name).subscribe((added)=>this.list=added);// why does this not have error cant read subscribe property but the findtemp1 does have error
 console.log(this.list.length);
 setTimeout(() => {
   if(this.list.length===len)
 {
   console.log("incorrect input");
 }
-}, 1500);
+}, 2500);
 
   return;
   setTimeout(() => {
