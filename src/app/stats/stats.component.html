@@ -2,10 +2,17 @@
 <button (click)="getList()" >
     inital
 </button>
-<input #countryinput>
-<button (click)="add(countryinput.value)" >
-    click_me
-</button>
+<div class="my">
+    <input #countryinput   (input)="search(countryinput.value)">
+    <ul class="search-result">
+        <li *ngFor="let name of Countryl$ | async" (click)="countryinput.value=''"(click)= clickme(name) >   
+            <span  class="badge">{{name}}</span> 
+        </li>
+      </ul>
+    <button (click)="clickme(countryinput.value)"(click)="countryinput.value=''" >
+        click_me
+    </button>
+    </div>
 <button routerLink="World">wrld</button>
 <h2>My stats</h2>
 <div class="text-center">
@@ -14,7 +21,7 @@
 <ul class="list">
     <li *ngFor="let Stat of list">
         <a routerLink="/Country/{{Stat.country}}">
-            <span class="badge">{{Stat.country}}</span> {{Stat.deaths}}
+            <span class="badge">{{Stat.country}}</span> {{Stat.deaths*100/Stat.confirmed|number : '1.2-2'}}% death to comfirmed
           </a>
           <button class="delete" title="delete country"
             (click)="delete(Stat.country)">x</button>
